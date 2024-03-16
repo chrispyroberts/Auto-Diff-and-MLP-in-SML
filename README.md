@@ -121,7 +121,7 @@ For our current computational graph, this function will give us the following li
 [a, b, d, c, e] : value list
 ```
 
-With this list, we call the backwards function stored in each value in reverse order, starting by setting the gradient of ```e``` to ```1.0```, then calling the backwards function stored in subsequent value until we reach ```a```, at which point the gradient has been computed.
+With this list, we call the backwards function stored in each value in reverse order, starting by setting the gradient of ```e``` to ```1.0```, then calling the backwards function stored in each subsequent value until we reach ```a```, at which point the gradient has been computed.
 
 ```SML
 (* Backwards function *)
