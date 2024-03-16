@@ -129,7 +129,7 @@ fun backwards (x) =
     let
         fun applyBackward (_, []) = ()
           | applyBackward (startNode, nodes) = 
-            (getGrad(startNode) := 1
+            (getGrad(startNode) := 1.0;
              foldr (fn (n, ()) => getBackward(n) ()) () nodes)
 
         val (_, topo) = buildTopo (x, [])
