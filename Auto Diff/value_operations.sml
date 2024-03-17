@@ -38,6 +38,38 @@ fun add(x : value, y : value) =
 
 (* value list * value list -> value list *)
 (* Derivative:  
+    subtract(x, y) = x -
+    d(subtract(x, y)) / dx = 1.0
+    d(subtract(x, y)) / dy = ~1.0
+*)
+fun subtract(x : value, y : value) =
+  let
+    val xData = getData(x)
+    val yData = getData(y)
+    val xGrad = getGrad(x)
+    val yGrad = getGrad(y)
+
+    val outData = ref (!xData - !yData)
+    val outGrad = ref 0.0
+
+    fun outBackwards () =
+      let
+        val dx = 1.0
+        val dy = ~1.0
+      in
+        (xGrad := !xGrad + dx * !outGrad;
+         yGrad := !yGrad + dy * !outGrad)
+      end
+
+    val children = [x, y]
+  in
+    mkValue(outData, outGrad, outBackwards, children)
+  end
+
+
+
+(* value list * value list -> value list *)
+(* Derivative:  
     d(mul(x, y)) / dx = y
     d(mul(x, y)) / dy = x
 
@@ -54,8 +86,8 @@ fun mul(x, y) =
 
     fun outBackwards () =
       let
-        val dx = !yData * !outGrad
-        val dy = !xData * !outGrad
+        val dx = !yData 
+        val dy = !xData 
       in
         (xGrad := !xGrad + dx * !outGrad;
          yGrad := !yGrad + dy * !outGrad)
